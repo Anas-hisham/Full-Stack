@@ -5,32 +5,27 @@ const router = express.Router();
 const multer = require('multer');
 
 const diskStorage = multer.diskStorage({
-
-    // destination => To Upload File
-    destinatiofn: function (req, file, cb) {
-        cb(null, 'uploads');
+    destination: function (req, file, cb) {
+      cb(null, 'uploads'); // store files in 'uploads' folder
     },
-
-    // filename => To Change FileName Before Upload To Make It Uniqe
     filename: function (req, file, cb) {
-
-        // Like image/png It Will Take png 
-        const ext = file.mimetype.split('/')[1];
-        const fileName = `user-${Date.now()}.${ext}`;
-        cb(null, fileName);
+      const ext = file.mimetype.split('/')[1]; // png, jpg, jpeg
+      const fileName = `user-${Date.now()}.${ext}`;
+      cb(null, fileName); // generate unique name like: user-1713644091513.jpg
     }
-})
+  })
+  
 
 // To Upload Images Only Not PDF
 const fileFilter = (req, file, cb) => {
-    const imageType = file.mimetype.split('/')[0];
-
+    const imageType = file.mimetype.split('/')[0]; // image/png → image
     if (imageType === 'image') {
-        return cb(null, true)
+      cb(null, true); // accept file
     } else {
-        return cb(appError.create('file must be an image', 400), false)
+      cb(appError.create('file must be an image', 400), false); // reject file
     }
-}
+  }
+  
 
 const upload = multer({ storage: diskStorage, fileFilter })
 

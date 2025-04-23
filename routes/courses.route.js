@@ -21,4 +21,4 @@ router.route('/:courseId')
     .delete(verifyToken, allowedTo(userRoles.ADMIN, userRoles.MANGER), courseController.deleteCourse);
 
 
-module.exports = router;      
+module.exports = router;

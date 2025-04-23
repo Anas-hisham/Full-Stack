@@ -6,8 +6,9 @@ const cors = require('cors');
 
 
 const app = express();
-
+// Makes you able to see it by link or route
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+console.log(__dirname);
 
 
 const mongoose = require('mongoose');
